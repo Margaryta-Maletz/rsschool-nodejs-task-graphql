@@ -77,45 +77,4 @@ export const rootQueryType = new GraphQLObjectType<RootQueryType, Context>({
             },
         },
     },
-    /*       memberType: async (args: { id: 'BASIC' | 'BUSINESS' }) => {
-           const { id } = args;
-
-           return prisma.memberType.findUnique({
-               where: { id }
-           });
-       },
-       users:
-       user: async (args: { id: string }) => {
-           const { id } = args;
-
-           console.log('resolvers id', id);
-
-           const result = await prisma.user.findUnique({
-               where: { id }
-           });
-
-           console.log('resolvers result', result);
-           return result;
-       },
-       posts: async () => {
-           return prisma.post.findMany();
-       },
-       post: async (args: { id: string }) => {
-           const { id } = args;
-
-           return prisma.post.findUnique({
-               where: { id },
-           });
-       },
-       profiles: async () => {
-           return prisma.profile.findMany();
-       },
-       profile: async (args: { id: string }) => {
-           const { id } = args;
-
-           return prisma.profile.findUnique({
-               where: { id },
-               include: { memberType: true },
-           });
-       },*/
 });

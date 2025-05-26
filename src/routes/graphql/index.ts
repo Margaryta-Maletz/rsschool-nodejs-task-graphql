@@ -18,7 +18,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
     },
     async handler(req) {
       const { query, variables } = req.body;
-      const context: Context = { prisma };
+      const context: Context = { prisma, dataLoaders: new WeakMap()};
 
       return await graphql({
         schema,
