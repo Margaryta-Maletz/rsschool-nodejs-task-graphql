@@ -9,6 +9,7 @@ import {
     GraphQLBoolean
 } from 'graphql';
 import { UUIDType } from './uuid.js';
+import { Context, Member, Post, Profile, User } from "./interfaces.js";
 
 export const MemberTypeId = new GraphQLEnumType({
     name: 'MemberTypeId',
@@ -18,7 +19,7 @@ export const MemberTypeId = new GraphQLEnumType({
     }
 });
 
-export const MemberType = new GraphQLObjectType({
+export const MemberType = new GraphQLObjectType<{ id: string } & Member>({
     name: 'MemberType',
     fields: () => ({
         id: { type: new GraphQLNonNull(MemberTypeId) },
@@ -27,7 +28,7 @@ export const MemberType = new GraphQLObjectType({
     })
 });
 
-export const UserType = new GraphQLObjectType({
+export const UserType = new GraphQLObjectType<{ id: string } & User, Context>({
     name: 'User',
     fields: () => ({
         id: { type: new GraphQLNonNull(UUIDType) },
@@ -35,12 +36,10 @@ export const UserType = new GraphQLObjectType({
         balance: { type: new GraphQLNonNull(GraphQLFloat) },
         profile: { type: ProfileType },
         posts: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(PostType))) },
-        userSubscribedTo: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(UserType))) },
-        subscribedToUser: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(UserType))) }
     })
 });
 
-export const PostType = new GraphQLObjectType({
+export const PostType = new GraphQLObjectType<{ id: string } & Post>({
     name: 'Post',
     fields: () => ({
         id: { type: new GraphQLNonNull(UUIDType) },
@@ -49,7 +48,7 @@ export const PostType = new GraphQLObjectType({
     })
 });
 
-export const ProfileType = new GraphQLObjectType({
+export const ProfileType = new GraphQLObjectType<{ id: string } & Profile, Context>({
     name: 'Profile',
     fields: () => ({
         id: { type: new GraphQLNonNull(UUIDType) },

@@ -1,10 +1,8 @@
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
-import { PrismaClient } from "@prisma/client";
 import { createGqlResponseSchema, gqlResponseSchema } from './schemas.js';
-import {graphql, GraphQLSchema} from 'graphql';
+import { graphql, GraphQLSchema } from 'graphql';
 import { rootQueryType } from './rootQueryType.js';
-
-export type Context = { prisma: PrismaClient };
+import { Context } from './types/interfaces.js';
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
   const { prisma } = fastify;
