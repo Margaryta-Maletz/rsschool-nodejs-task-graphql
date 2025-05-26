@@ -2,6 +2,7 @@ import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import { createGqlResponseSchema, gqlResponseSchema } from './schemas.js';
 import { graphql, GraphQLSchema } from 'graphql';
 import { rootQueryType } from './rootQueryType.js';
+import { mutationType } from './mutationType.js';
 import { Context } from './types/interfaces.js';
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
@@ -32,6 +33,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
 
 export const schema = new GraphQLSchema({
   query: rootQueryType,
+  mutation: mutationType,
 })
 
 export default plugin;
