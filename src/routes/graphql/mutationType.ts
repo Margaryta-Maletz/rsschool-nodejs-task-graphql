@@ -1,8 +1,9 @@
-import { GraphQLObjectType } from 'graphql/type/index.js';
-import { Context, Post, Profile, RootQueryType, User } from './types/interfaces.js';
-import { PostType, ProfileType, UserType } from './types/objects.js';
+import {GraphQLObjectType, GraphQLString} from 'graphql';
 import { GraphQLNonNull } from 'graphql';
+import { Context, ID, Post, Profile, RootQueryType, User } from './types/interfaces.js';
+import { PostType, ProfileType, UserType } from './types/objects.js';
 import { CreatePostInputType, CreateProfileInputType, CreateUserInputType } from './types/inputs.js';
+import { UUIDType } from './types/uuid.js';
 
 
 export const mutationType = new GraphQLObjectType<RootQueryType, Context>({
@@ -40,6 +41,42 @@ export const mutationType = new GraphQLObjectType<RootQueryType, Context>({
                 return context.prisma.post.create({
                     data: dto
                 });
+            }
+        },
+        deleteUser: {
+            type: GraphQLString,
+            args: {
+                id: { type: new GraphQLNonNull(UUIDType) }
+            },
+            resolve: async (source, { id }: ID, context) => {
+                await context.prisma.user.delete({
+                    where: { id: id },
+                });
+                return 'User was deleted';
+            }
+        },
+        deleteProfile: {
+            type: GraphQLString,
+            args: {
+                id: { type: new GraphQLNonNull(UUIDType) }
+            },
+            resolve: async (source, { id }: ID, context) => {
+                await context.prisma.profile.delete({
+                    where: { id },
+                });
+                return 'Profile was deleted';
+            }
+        },
+        deletePost: {
+            type: GraphQLString,
+            args: {
+                id: { type: new GraphQLNonNull(UUIDType) }
+            },
+            resolve: async (source, { id }: ID, context) => {
+                await context.prisma.post.delete({
+                    where: { id },
+                });
+                return 'Post was deleted';
             }
         },
     },
